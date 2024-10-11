@@ -4,8 +4,9 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bqfdg"]
 
-[node name="Node3D" type="CharacterBody3D"]
+[node name="Node3D" type="CharacterBody3D" node_paths=PackedStringArray("_camera")]
 script = ExtResource("1_fyd1d")
+_camera = NodePath("Camera3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

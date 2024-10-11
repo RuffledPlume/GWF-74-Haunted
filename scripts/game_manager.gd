@@ -1,6 +1,13 @@
 class_name GameManager extends Node
 
+ # TODO Make Settings page!
+var _camera_look_sens : float = 0.75
+
+# Internal Game Values
 var _is_locked : bool
+
+func is_mouse_locked() -> bool:
+	return _is_locked && Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
