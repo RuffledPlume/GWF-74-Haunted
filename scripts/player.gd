@@ -66,8 +66,11 @@ func _do_surface_normalization() -> void:
 	var ray_params := PhysicsRayQueryParameters3D.create(ray_orgin, ray_target)
 	var result := space_state.intersect_ray(ray_params)
 	
-	var forward := global_basis.z
+	# TODO cache these values
+	var input := _get_input()
+	var forward := (global_transform.basis * Vector3(input.x, 0.0, input.y)).normalized()
 	
+	var closest_hit_found : bool
 	var closest_hit_point : Vector3
 	var closest_hit_normal : Vector3
 	var closest_hit_dot : float = 1.0
@@ -90,7 +93,8 @@ func _do_surface_normalization() -> void:
 			_surface_normal += result.normal
 			
 			var offset_dot := offset.normalized().dot(forward)
-			if offset_dot < closest_hit_dot:
+			if !closest_hit_found || offset_dot > closest_hit_dot:
+				closest_hit_found = true
 				closest_hit_dot = offset_dot
 				closest_hit_point = result.position
 				closest_hit_normal = result.normal
@@ -100,10 +104,10 @@ func _do_surface_normalization() -> void:
 		_surface_point /= float(hit_count)
 		_surface_normal = (_surface_normal / float(hit_count)).normalized()
 		
-		if closest_hit_dot < -0.95 && closest_hit_normal.dot(Vector3.UP) > 0.95:
+		if closest_hit_found && closest_hit_normal.dot(Vector3.UP) > 0.95:
 			var height_diff := closest_hit_point.y - global_position.y
 			if height_diff > _min_step_height && height_diff < _max_step_height:
-				if _get_input().y < 0.0:
+				if input.length() > 0.5:
 					global_position.y = closest_hit_point.y
 	else:
 		_surface_point = global_position
