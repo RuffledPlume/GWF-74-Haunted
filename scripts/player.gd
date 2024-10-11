@@ -3,7 +3,7 @@ class_name Player extends CharacterBody3D
 @export var _camera : Camera3D
 @export var _base_speed : float = 20.0
 @export var _run_mod : float = 1.75
-@export var _jump_force : float = 10.0
+@export var _jump_force : float = 7.0
 @export var _ground_friction : float = 5.0
 @export var _air_drag : float = 1.5
 
@@ -45,20 +45,29 @@ func _do_locomotion(delta: float) -> void:
 	var input := _get_input()
 	var input_3d := (global_transform.basis * Vector3(input.x, 0.0, input.y)).normalized()
 	var is_grounded := is_on_floor()
-		
+	var is_running := Input.is_action_pressed("Movement_Run")
+	
 	var new_velocity := velocity
 	new_velocity += _gravity * delta
 	
 	if is_grounded:
 		var speed := _base_speed
-		if Input.is_action_just_pressed("Movement_Run"):
+		if is_running:
 			speed *= _run_mod
-		new_velocity += input_3d * (_base_speed * delta)
+		new_velocity += input_3d * (speed * delta)
 		if Input.is_action_just_pressed("Movement_Jump"):
-			new_velocity += Vector3.UP * _jump_force
+			if is_running:
+				# Whilst running, add additional horizontal movement
+				new_velocity += Vector3.UP * _jump_force
+				new_velocity.x *= 2.0
+				new_velocity.z *= 2.0
+			else:
+				# Whilst not running, jump a little bit higher
+				new_velocity += Vector3.UP * (_jump_force + (_jump_force * 0.5))
 		new_velocity -= velocity * (delta * _ground_friction)
 	else:
-		new_velocity.y -= velocity.y * (delta * _air_drag)
+		new_velocity += input_3d * (_base_speed * delta * 0.2) # Allow a little bit of agency whilst jumping
+		new_velocity -= velocity * (delta * _air_drag)
 	
 	velocity = new_velocity 
 	move_and_slide()
