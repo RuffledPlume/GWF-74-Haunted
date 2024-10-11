@@ -10,6 +10,8 @@ class_name Player extends CharacterBody3D
 var _mouse_relative : Vector2
 var _gravity : Vector3
 var _gravity_strength : float
+var _surface_point : Vector3
+var _surface_normal : Vector3
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -24,6 +26,8 @@ func _process(delta: float) -> void:
 	_do_camera_look(delta)
 	
 func _physics_process(delta: float) -> void:
+	if is_on_floor():
+		_do_surface_normalization()
 	_do_locomotion(delta)
 	
 func _get_input() -> Vector2:
@@ -41,6 +45,51 @@ func _get_input() -> Vector2:
 	
 	return input
 	
+func debug_draw_raycast(params: PhysicsRayQueryParameters3D, result: Dictionary) -> void:
+	if result.is_empty():
+		DebugDraw3D.draw_line(params.from, params.to, Color.RED)
+	else:
+		DebugDraw3D.draw_line(params.from, result.position, Color.GREEN)
+	
+func _do_surface_normalization() -> void:
+	var height_offset := 0.5
+	
+	var ray_count := 8
+	var hit_count := 0
+	
+	var ray_orgin = global_position + Vector3.UP * height_offset
+	var ray_target = global_position + Vector3.DOWN * (height_offset * 1.1)
+	
+	var space_state = get_world_3d().direct_space_state
+	var ray_params := PhysicsRayQueryParameters3D.create(ray_orgin, ray_target)
+	var result := space_state.intersect_ray(ray_params)
+	
+	debug_draw_raycast(ray_params, result)
+	if !result.is_empty():
+		hit_count += 1
+		_surface_point += result.position
+		_surface_normal += result.normal
+		
+	for i in ray_count:
+		var frac := float(i) / float(ray_count)
+		var offset := Vector3(cos(frac * PI * 2.0), 0.0, sin(frac * PI * 2.0)) * 0.5
+		
+		ray_params = PhysicsRayQueryParameters3D.create(ray_orgin + offset, ray_target + offset)
+		result = space_state.intersect_ray(ray_params)
+		
+		debug_draw_raycast(ray_params, result)
+		if !result.is_empty():
+			hit_count += 1
+			_surface_point += result.position
+			_surface_normal += result.normal
+			
+	if hit_count > 0:
+		_surface_point /= float(hit_count)
+		_surface_normal = (_surface_normal / float(hit_count)).normalized()
+	else:
+		_surface_point = global_position
+		_surface_normal = Vector3.UP
+	
 func _do_locomotion(delta: float) -> void:
 	var input := _get_input()
 	var input_3d := (global_transform.basis * Vector3(input.x, 0.0, input.y)).normalized()
@@ -54,6 +103,7 @@ func _do_locomotion(delta: float) -> void:
 		var speed := _base_speed
 		if is_running:
 			speed *= _run_mod
+		input_3d = input_3d.slide(_surface_normal)
 		new_velocity += input_3d * (speed * delta)
 		if Input.is_action_just_pressed("Movement_Jump"):
 			if is_running:
