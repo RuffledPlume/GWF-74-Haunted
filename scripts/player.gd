@@ -6,6 +6,8 @@ class_name Player extends CharacterBody3D
 @export var _jump_force : float = 7.0
 @export var _ground_friction : float = 5.0
 @export var _air_drag : float = 1.5
+@export var _min_step_height := 0.15
+@export var _max_step_height := 0.3
 
 var _mouse_relative : Vector2
 var _gravity : Vector3
@@ -64,12 +66,17 @@ func _do_surface_normalization() -> void:
 	var ray_params := PhysicsRayQueryParameters3D.create(ray_orgin, ray_target)
 	var result := space_state.intersect_ray(ray_params)
 	
-	debug_draw_raycast(ray_params, result)
+	var forward := global_basis.z
+	
+	var closest_hit_point : Vector3
+	var closest_hit_normal : Vector3
+	var closest_hit_dot : float = 1.0
+	
 	if !result.is_empty():
 		hit_count += 1
 		_surface_point += result.position
 		_surface_normal += result.normal
-		
+				
 	for i in ray_count:
 		var frac := float(i) / float(ray_count)
 		var offset := Vector3(cos(frac * PI * 2.0), 0.0, sin(frac * PI * 2.0)) * 0.5
@@ -83,9 +90,22 @@ func _do_surface_normalization() -> void:
 			_surface_point += result.position
 			_surface_normal += result.normal
 			
+			var offset_dot := offset.normalized().dot(forward)
+			if offset_dot < closest_hit_dot:
+				closest_hit_dot = offset_dot
+				closest_hit_point = result.position
+				closest_hit_normal = result.normal
+			
+			
 	if hit_count > 0:
 		_surface_point /= float(hit_count)
 		_surface_normal = (_surface_normal / float(hit_count)).normalized()
+		
+		if closest_hit_dot < -0.95:
+			var height_diff := closest_hit_point.y - global_position.y
+			if height_diff > _min_step_height && height_diff < _max_step_height:
+				if _get_input().y < 0.0:
+					global_position.y = closest_hit_point.y
 	else:
 		_surface_point = global_position
 		_surface_normal = Vector3.UP
