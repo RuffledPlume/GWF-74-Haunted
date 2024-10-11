@@ -84,7 +84,6 @@ func _do_surface_normalization() -> void:
 		ray_params = PhysicsRayQueryParameters3D.create(ray_orgin + offset, ray_target + offset)
 		result = space_state.intersect_ray(ray_params)
 		
-		debug_draw_raycast(ray_params, result)
 		if !result.is_empty():
 			hit_count += 1
 			_surface_point += result.position
@@ -101,7 +100,7 @@ func _do_surface_normalization() -> void:
 		_surface_point /= float(hit_count)
 		_surface_normal = (_surface_normal / float(hit_count)).normalized()
 		
-		if closest_hit_dot < -0.95 && closest_hit_normal.dot(Vector3.UP) > 0.9:
+		if closest_hit_dot < -0.95 && closest_hit_normal.dot(Vector3.UP) > 0.95:
 			var height_diff := closest_hit_point.y - global_position.y
 			if height_diff > _min_step_height && height_diff < _max_step_height:
 				if _get_input().y < 0.0:
@@ -123,7 +122,7 @@ func _do_locomotion(delta: float) -> void:
 		var speed := _base_speed
 		if is_running:
 			speed *= _run_mod
-		input_3d = input_3d.slide(_surface_normal)
+		input_3d = input_3d.slide(_surface_normal).normalized()
 		new_velocity += input_3d * (speed * delta)
 		if Input.is_action_just_pressed("Movement_Jump"):
 			if is_running:
