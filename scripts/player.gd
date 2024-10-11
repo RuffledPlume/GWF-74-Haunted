@@ -101,7 +101,7 @@ func _do_surface_normalization() -> void:
 		_surface_point /= float(hit_count)
 		_surface_normal = (_surface_normal / float(hit_count)).normalized()
 		
-		if closest_hit_dot < -0.95:
+		if closest_hit_dot < -0.95 && closest_hit_normal.dot(Vector3.UP) > 0.9:
 			var height_diff := closest_hit_point.y - global_position.y
 			if height_diff > _min_step_height && height_diff < _max_step_height:
 				if _get_input().y < 0.0:
