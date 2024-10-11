@@ -60,7 +60,7 @@ func _do_surface_normalization() -> void:
 	var hit_count := 0
 	
 	var ray_orgin = global_position + Vector3.UP * height_offset
-	var ray_target = global_position + Vector3.DOWN * (height_offset * 1.1)
+	var ray_target = global_position + Vector3.DOWN * (height_offset * 1.25)
 	
 	var space_state = get_world_3d().direct_space_state
 	var ray_params := PhysicsRayQueryParameters3D.create(ray_orgin, ray_target)
