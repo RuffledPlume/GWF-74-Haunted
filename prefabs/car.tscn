@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://b1gvxk0btl5y8"]
+
+[node name="Car" type="Node3D"]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.9, 0, 0, 0)
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, 0, 0.87196, 0)
+size = Vector3(5, 1, 3)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, -0.75, 1.63696, 0)
+size = Vector3(2.5, 0.7, 3)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.824168, -0.440479, 0, 0.384316, 0.94461, -1.93715e-07, 2.08066, -1.6)
+operation = 2
+size = Vector3(5.2, 2.3, 1.1)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.824168, 0.404758, 0, -0.384316, 0.868005, 0.05, 2.08066, 1.6)
+operation = 2
+size = Vector3(5.1, 2.3, 1.1)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.10753e-08, 0.309881, 0.971832, 1.49502e-08, 0.85139, -0.353718, -1, 0, -4.52064e-08, -2.125, 2.47963, 0.05)
+operation = 2
+size = Vector3(3, 2.2, 1.1)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-3.34849e-08, -0.593547, 0.716804, -2.80971e-08, 0.707362, 0.60147, -1, -1.12202e-15, -4.09017e-08, 0.310721, 2.36857, 0.05)
+operation = 2
+size = Vector3(3, 2, 1.1)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, 2.4, 1.18696, 1.1)
+size = Vector3(0.5, 0.2, 0.5)
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, 2.4, 1.18696, -1.1)
+size = Vector3(0.5, 0.2, 0.5)
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, -2.3, 1.09696, -1.1)
+size = Vector3(0.5, 0.4, 0.5)
+
+[node name="CSGBox3D12" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, -2.3, 1.09696, 1.1)
+size = Vector3(0.5, 0.4, 0.5)
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, 2.4, 1.00696, -1.1)
+size = Vector3(0.5, 0.1, 0.5)
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, 2.4, 1.00696, 1.1)
+size = Vector3(0.5, 0.1, 0.5)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.6, 0.6, 1.3)
+operation = 2
+radius = 0.6
+height = 0.5
+sides = 36
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.6, 0.6, 1.3)
+height = 0.5
+sides = 36
+
+[node name="CSGCylinder3D5" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.8, 0.6, 1.3)
+operation = 2
+radius = 0.6
+height = 0.5
+sides = 36
+
+[node name="CSGCylinder3D6" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.8, 0.6, 1.3)
+height = 0.5
+sides = 36
+
+[node name="CSGCylinder3D7" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.8, 0.6, -1.3)
+operation = 2
+radius = 0.6
+height = 0.5
+sides = 36
+
+[node name="CSGCylinder3D8" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.8, 0.6, -1.3)
+height = 0.5
+sides = 36
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.6, 0.6, -1.3)
+operation = 2
+radius = 0.6
+height = 0.5
+sides = 36
+
+[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.6, 0.6, -1.3)
+height = 0.5
+sides = 36

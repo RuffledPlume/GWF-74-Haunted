@@ -1,14 +1,14 @@
-[gd_scene load_steps=40 format=3 uid="uid://8571h2ly0ca4"]
+[gd_scene load_steps=48 format=3 uid="uid://8571h2ly0ca4"]
 
 [ext_resource type="Texture2D" uid="uid://cr810j8dql7o7" path="res://materials/prototype-texture-with-size.png" id="1_p5l4j"]
 [ext_resource type="PackedScene" uid="uid://df44bhfnmcu8x" path="res://prefabs/pf_player.tscn" id="2_0lnxp"]
 [ext_resource type="PackedScene" uid="uid://dpiy7nvcm57as" path="res://prefabs/bus_shelter.tscn" id="3_sd02j"]
 [ext_resource type="PackedScene" uid="uid://c0ql0d22icep8" path="res://prefabs/streetlight.tscn" id="4_bnoxs"]
 [ext_resource type="PackedScene" uid="uid://syf0bukbtcnd" path="res://prefabs/soul_orb.tscn" id="5_66tmv"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a0o72"]
-albedo_texture = ExtResource("1_p5l4j")
-uv1_triplanar = true
+[ext_resource type="PackedScene" uid="uid://c7qbq51m2t6db" path="res://prefabs/dumpster.tscn" id="6_aqbwe"]
+[ext_resource type="PackedScene" uid="uid://cal4lwar5le8p" path="res://prefabs/trashcan.tscn" id="7_qm31h"]
+[ext_resource type="PackedScene" uid="uid://b1gvxk0btl5y8" path="res://prefabs/car.tscn" id="8_s3kif"]
+[ext_resource type="PackedScene" uid="uid://g8sp1fru5hv8" path="res://prefabs/bus.tscn" id="9_r7wl0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o6ide"]
 sky_top_color = Color(0.294118, 0.352941, 0.54902, 1)
@@ -71,7 +71,23 @@ uv1_triplanar = true
 albedo_texture = ExtResource("1_p5l4j")
 uv1_triplanar = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cwfsu"]
+albedo_texture = ExtResource("1_p5l4j")
+uv1_triplanar = true
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3kpjn"]
+albedo_texture = ExtResource("1_p5l4j")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_foayw"]
+albedo_texture = ExtResource("1_p5l4j")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0rvkd"]
+albedo_texture = ExtResource("1_p5l4j")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c4ce5"]
 albedo_texture = ExtResource("1_p5l4j")
 uv1_triplanar = true
 
@@ -80,6 +96,10 @@ albedo_texture = ExtResource("1_p5l4j")
 uv1_triplanar = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0g2od"]
+albedo_texture = ExtResource("1_p5l4j")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a0o72"]
 albedo_texture = ExtResource("1_p5l4j")
 uv1_triplanar = true
 
@@ -153,12 +173,9 @@ uv1_triplanar = true
 
 [node name="Node3D" parent="." instance=ExtResource("2_0lnxp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 3, 4)
-
-[node name="MEASURE" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 277.8, 0, 59.8)
-material_override = SubResource("StandardMaterial3D_a0o72")
-use_collision = true
-size = Vector3(7.5, 0.5, 7.5)
+_base_speed = 26.0
+_jump_force = 8.0
+_air_drag = 1.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_qhvmo")
@@ -280,27 +297,47 @@ radius = 0.25
 height = 4.0
 sides = 36
 
-[node name="CSGBox3D" type="CSGBox3D" parent="Buildings/BuildingCombiner"]
+[node name="CSGBox3D" type="CSGBox3D" parent="Buildings/BuildingCombiner/Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+size = Vector3(21, 1, 11)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Buildings/BuildingCombiner/Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -5)
+size = Vector3(2, 14, 2)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Buildings/BuildingCombiner/Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 5)
+size = Vector3(2, 14, 2)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Buildings/BuildingCombiner/Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 5)
+size = Vector3(2, 14, 2)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Buildings/BuildingCombiner/Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -5)
+size = Vector3(2, 14, 2)
+
+[node name="Walkway" type="CSGBox3D" parent="Buildings/BuildingCombiner"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 9.5)
 size = Vector3(3, 3, 9)
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="Buildings/BuildingCombiner"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 2, 9.5)
+[node name="CSGBox3D2" type="CSGBox3D" parent="Buildings/BuildingCombiner/Walkway"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 0, 0)
 operation = 2
 size = Vector3(2, 2, 9)
 
-[node name="CSGBox3D3" type="CSGBox3D" parent="Buildings/BuildingCombiner"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 2.25, 9.5)
+[node name="CSGBox3D3" type="CSGBox3D" parent="Buildings/BuildingCombiner/Walkway"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 0.25, 0)
 operation = 2
 size = Vector3(4, 1.5, 2)
 
-[node name="CSGBox3D4" type="CSGBox3D" parent="Buildings/BuildingCombiner"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 2.25, 6.5)
+[node name="CSGBox3D4" type="CSGBox3D" parent="Buildings/BuildingCombiner/Walkway"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 0.25, -3)
 operation = 2
 size = Vector3(4, 1.5, 2)
 
-[node name="CSGBox3D5" type="CSGBox3D" parent="Buildings/BuildingCombiner"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 2.25, 12.5)
+[node name="CSGBox3D5" type="CSGBox3D" parent="Buildings/BuildingCombiner/Walkway"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 0.25, 3)
 operation = 2
 size = Vector3(4, 1.5, 2)
 
@@ -313,6 +350,18 @@ use_collision = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 material_override = SubResource("StandardMaterial3D_773gr")
 size = Vector3(20, 18, 10)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Buildings/BuildingCombiner2/Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.5, 0)
+size = Vector3(3, 3, 3)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Buildings/BuildingCombiner2/Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 10.5, 0)
+size = Vector3(3, 3, 3)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Buildings/BuildingCombiner2/Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 10.5, 0)
+size = Vector3(3, 3, 3)
 
 [node name="EntranceCutout" type="CSGCylinder3D" parent="Buildings/BuildingCombiner2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.295, -5.667)
@@ -510,6 +559,7 @@ size = Vector3(5, 5, 27)
 [node name="BuildingCombiner6" type="CSGCombiner3D" parent="Buildings"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 31.5, -11)
 material_override = SubResource("StandardMaterial3D_23t8t")
+use_collision = true
 
 [node name="Building7" type="CSGBox3D" parent="Buildings/BuildingCombiner6"]
 material_override = SubResource("StandardMaterial3D_21wkx")
@@ -729,25 +779,65 @@ material_override = SubResource("StandardMaterial3D_2mlim")
 use_collision = true
 size = Vector3(27, 12.3, 10)
 
-[node name="Building8" type="CSGBox3D" parent="Buildings"]
+[node name="BuildingCombiner8" type="CSGCombiner3D" parent="Buildings"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.5, 25.5, 16)
+material_override = SubResource("StandardMaterial3D_cwfsu")
+use_collision = true
+
+[node name="Building8" type="CSGBox3D" parent="Buildings/BuildingCombiner8"]
 material_override = SubResource("StandardMaterial3D_3kpjn")
 size = Vector3(20, 50, 20)
 
-[node name="Building12" type="CSGBox3D" parent="Buildings"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 16.5, 94)
-material_override = SubResource("StandardMaterial3D_hgw3f")
-size = Vector3(20, 32, 20)
+[node name="CSGBox3D" type="CSGBox3D" parent="Buildings/BuildingCombiner8/Building8"]
+transform = Transform3D(0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, -10, 0, -4.5)
+size = Vector3(5, 10, 7)
 
-[node name="Building13" type="CSGBox3D" parent="Buildings"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 22, 94)
-material_override = SubResource("StandardMaterial3D_hgw3f")
-size = Vector3(20, 43, 20)
+[node name="CSGBox3D2" type="CSGBox3D" parent="Buildings/BuildingCombiner8/Building8"]
+transform = Transform3D(0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, -10, 0, 4.5)
+size = Vector3(5, 10, 7)
 
-[node name="Building14" type="CSGBox3D" parent="Buildings"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.5, 22, 94)
-material_override = SubResource("StandardMaterial3D_hgw3f")
-size = Vector3(20, 43, 20)
+[node name="CSGBox3D3" type="CSGBox3D" parent="Buildings/BuildingCombiner8/Building8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 19, -8)
+operation = 2
+size = Vector3(5, 15, 5)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Buildings/BuildingCombiner8/Building8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 19, 8)
+operation = 2
+size = Vector3(5, 15, 5)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Buildings/BuildingCombiner8/Building8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 19, 8)
+operation = 2
+size = Vector3(5, 15, 5)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Buildings/BuildingCombiner8/Building8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 19, -8)
+operation = 2
+size = Vector3(5, 15, 5)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Buildings/BuildingCombiner8/Building8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 40.5, 0)
+size = Vector3(8, 11, 8)
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="Buildings/BuildingCombiner8/Building8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 30, 0)
+size = Vector3(10, 10, 10)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Buildings/BuildingCombiner8/Building8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 47, 0)
+radius = 2.0
+sides = 24
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Buildings/BuildingCombiner8/Building8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 49, 0)
+radius = 1.5
+sides = 24
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="Buildings/BuildingCombiner8/Building8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 53, 0)
+height = 6.0
+sides = 24
 
 [node name="Building11" type="CSGBox3D" parent="Buildings"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.5, 20.5, -13)
@@ -785,6 +875,182 @@ height = 30.0
 [node name="CSGCylinder3D4" type="CSGCylinder3D" parent="Buildings/Building11"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -5.6, 11)
 height = 30.0
+
+[node name="Building12" type="CSGBox3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 16.5, 94)
+material_override = SubResource("StandardMaterial3D_hgw3f")
+use_collision = true
+size = Vector3(20, 32, 20)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Buildings/Building12"]
+transform = Transform3D(-4.37114e-08, -1, 0, 0.984808, -4.30473e-08, 0.173648, -0.173648, 7.5904e-09, 0.984808, 0, 1, -8.1)
+size = Vector3(21, 5, 6)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Buildings/Building12"]
+size = Vector3(21, 1, 21)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Buildings/Building12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
+size = Vector3(21, 1, 21)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Buildings/Building12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
+size = Vector3(21, 1, 21)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Buildings/Building12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+size = Vector3(21, 1, 21)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Buildings/Building12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+size = Vector3(21, 1, 21)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Buildings/Building12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14, 0)
+size = Vector3(21, 1, 21)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Buildings/Building12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21, 0)
+radius = 5.0
+height = 10.0
+sides = 36
+
+[node name="CSGCylinder3D6" type="CSGCylinder3D" parent="Buildings/Building12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 30, -1)
+radius = 0.2
+height = 8.0
+sides = 12
+
+[node name="CSGCylinder3D8" type="CSGCylinder3D" parent="Buildings/Building12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 31, -1.4)
+radius = 0.1
+height = 10.0
+sides = 12
+
+[node name="CSGCylinder3D7" type="CSGCylinder3D" parent="Buildings/Building12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31, 0)
+height = 10.0
+sides = 12
+
+[node name="CSGCylinder3D9" type="CSGCylinder3D" parent="Buildings/Building12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 39, 0)
+radius = 0.1
+height = 6.0
+sides = 12
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Buildings/Building12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 18, -8)
+radius = 1.0
+height = 4.0
+sides = 24
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="Buildings/Building12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 18, -8)
+radius = 1.0
+height = 4.0
+sides = 24
+
+[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="Buildings/Building12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 18, 8)
+radius = 1.0
+height = 4.0
+sides = 24
+
+[node name="CSGCylinder3D5" type="CSGCylinder3D" parent="Buildings/Building12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 18, 8)
+radius = 1.0
+height = 4.0
+sides = 24
+
+[node name="Building13" type="CSGBox3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 22, 94)
+material_override = SubResource("StandardMaterial3D_hgw3f")
+use_collision = true
+size = Vector3(20, 43, 20)
+
+[node name="Walkway2" type="CSGBox3D" parent="Buildings/Building13"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 15.4, -8.4, -4)
+material_override = SubResource("StandardMaterial3D_foayw")
+use_collision = true
+size = Vector3(3, 3, 11.4)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Buildings/Building13/Walkway2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 0, 0)
+operation = 2
+size = Vector3(2, 2, 9)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Buildings/Building13/Walkway2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 0.25, 0)
+operation = 2
+size = Vector3(4, 1.5, 2)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Buildings/Building13/Walkway2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 0.25, -3)
+operation = 2
+size = Vector3(4, 1.5, 2)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Buildings/Building13/Walkway2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 0.25, 3)
+operation = 2
+size = Vector3(4, 1.5, 2)
+
+[node name="Walkway3" type="CSGBox3D" parent="Buildings/Building13"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 15.4, -0.4, 0)
+material_override = SubResource("StandardMaterial3D_0rvkd")
+use_collision = true
+size = Vector3(3, 3, 11.4)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Buildings/Building13/Walkway3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 0, 0)
+operation = 2
+size = Vector3(2, 2, 9)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Buildings/Building13/Walkway3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 0.25, 0)
+operation = 2
+size = Vector3(4, 1.5, 2)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Buildings/Building13/Walkway3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 0.25, -3)
+operation = 2
+size = Vector3(4, 1.5, 2)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Buildings/Building13/Walkway3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 0.25, 3)
+operation = 2
+size = Vector3(4, 1.5, 2)
+
+[node name="Walkway4" type="CSGBox3D" parent="Buildings/Building13"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 15.4, 8.6, 4)
+material_override = SubResource("StandardMaterial3D_c4ce5")
+use_collision = true
+size = Vector3(3, 3, 11.4)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Buildings/Building13/Walkway4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 0, 0)
+operation = 2
+size = Vector3(2, 2, 9)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Buildings/Building13/Walkway4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 0.25, 0)
+operation = 2
+size = Vector3(4, 1.5, 2)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Buildings/Building13/Walkway4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 0.25, -3)
+operation = 2
+size = Vector3(4, 1.5, 2)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Buildings/Building13/Walkway4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98952e-11, 0.25, 3)
+operation = 2
+size = Vector3(4, 1.5, 2)
+
+[node name="Building14" type="CSGBox3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.5, 22, 94)
+material_override = SubResource("StandardMaterial3D_hgw3f")
+use_collision = true
+size = Vector3(20, 43, 20)
 
 [node name="Building15" type="CSGBox3D" parent="Buildings"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.5, 20.5, 54)
@@ -1796,6 +2062,21 @@ transform = Transform3D(0.5, 0, -0.866026, 0, 1, 0, 0.866026, 0, 0.5, -42.4865, 
 [node name="Streetlight4" parent="StreetLights" instance=ExtResource("4_bnoxs")]
 transform = Transform3D(0.5, 0, -0.866026, 0, 1, 0, 0.866026, 0, 0.5, -62.4051, -3.5, 135.911)
 
+[node name="Streetlight10" parent="StreetLights" instance=ExtResource("4_bnoxs")]
+transform = Transform3D(0.5, 0, -0.866026, 0, 1, 0, 0.866026, 0, 0.5, -43.1551, -3.5, 169.253)
+
+[node name="Streetlight11" parent="StreetLights" instance=ExtResource("4_bnoxs")]
+transform = Transform3D(0.5, 0, -0.866026, 0, 1, 0, 0.866026, 0, 0.5, -57.6551, -3.5, 144.138)
+
+[node name="Streetlight12" parent="StreetLights" instance=ExtResource("4_bnoxs")]
+transform = Transform3D(0.5, 0, -0.866026, 0, 1, 0, 0.866026, 0, 0.5, -30.8083, -3.5, 128.638)
+
+[node name="Streetlight13" parent="StreetLights" instance=ExtResource("4_bnoxs")]
+transform = Transform3D(0.5, 0, -0.866026, 0, 1, 0, 0.866026, 0, 0.5, -3.96151, -3.5, 113.138)
+
+[node name="Streetlight14" parent="StreetLights" instance=ExtResource("4_bnoxs")]
+transform = Transform3D(0.5, 0, -0.866026, 0, 1, 0, 0.866026, 0, 0.5, 24.6173, -3.5, 96.6383)
+
 [node name="Streetlight5" parent="StreetLights" instance=ExtResource("4_bnoxs")]
 transform = Transform3D(0.5, 0, -0.866026, 0, 1, 0, 0.866026, 0, 0.5, -78.9051, -3.5, 107.332)
 
@@ -1837,5 +2118,23 @@ light_energy = 7.0
 shadow_enabled = true
 shadow_reverse_cull_face = true
 shadow_opacity = 0.16
+
+[node name="Dumpster" parent="." instance=ExtResource("6_aqbwe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.4, 44.5)
+
+[node name="Dumpster2" parent="." instance=ExtResource("6_aqbwe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 44.5)
+
+[node name="Dumpster3" parent="." instance=ExtResource("6_aqbwe")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0.4, 50.5)
+
+[node name="Trashcan" parent="." instance=ExtResource("7_qm31h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.7, 0.5, 26.1)
+
+[node name="Car" parent="." instance=ExtResource("8_s3kif")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.15, 23)
+
+[node name="Bus" parent="." instance=ExtResource("9_r7wl0")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -23, 0.659958, 32)
 
 [editable path="SoulOrb"]
