@@ -1,7 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://df44bhfnmcu8x"]
+[gd_scene load_steps=6 format=3 uid="uid://df44bhfnmcu8x"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_fyd1d"]
 [ext_resource type="PackedScene" uid="uid://j10i3n7ax4r4" path="res://prefabs/pf_hoover.tscn" id="2_on8xf"]
+
+[sub_resource type="Curve" id="Curve_7t3sb"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.847368, 0.351648), 1.07559, 1.07559, 0, 0, Vector2(0.984211, 1), 6.26373, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bqfdg"]
 
@@ -14,6 +18,8 @@ collision_layer = 2
 script = ExtResource("1_fyd1d")
 _sucking_force = 25.0
 _nozzle = NodePath("Camera3D/Hoover/Node3D")
+_suck_up_time = 1.5
+_suck_curve = SubResource("Curve_7t3sb")
 _camera = NodePath("Camera3D")
 _suck_zone = NodePath("Camera3D/Area3D")
 

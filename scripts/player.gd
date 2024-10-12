@@ -12,6 +12,8 @@ class_name Player extends CharacterBody3D
 @export_category("Hoover Values")
 @export var _sucking_force : float = 100.0
 @export var _nozzle : Node3D
+@export var _suck_up_time : float = 3.0
+@export var _suck_curve : Curve
 
 @export_category("Internal")
 @export var _camera : Camera3D
@@ -24,6 +26,7 @@ var _surface_point : Vector3
 var _surface_normal : Vector3
 var _spirts_within_suckzone : Array[Spirit]
 var _rigidbodies_within_suckzone : Array[RigidBody3D]
+var _spirt_being_sucked : Spirit
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -55,14 +58,12 @@ func _input(event: InputEvent) -> void:
 		
 func _process(delta: float) -> void:
 	_do_camera_look(delta)
+	_do_sucking(delta)
 	
 func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		_do_surface_normalization()
 	_do_locomotion(delta)
-	
-	if Input.is_action_pressed("Suck"):
-		_do_sucking()
 	
 func _get_input() -> Vector2:
 	var input : Vector2
@@ -85,9 +86,42 @@ func debug_draw_raycast(params: PhysicsRayQueryParameters3D, result: Dictionary)
 	else:
 		DebugDraw3D.draw_line(params.from, result.position, Color.GREEN)
 
-func _do_sucking() -> void:
+func _do_sucking(delta: float) -> void:
+	if !Input.is_action_pressed("Suck"):
+		if _spirt_being_sucked != null:
+			_spirt_being_sucked._is_being_sucked = false
+		return
+		
 	for rigid in _rigidbodies_within_suckzone:
 		rigid.apply_force((_nozzle.global_position - rigid.global_position).normalized() * _sucking_force)
+
+	var closest_spirit : Spirit
+	var closest_distance : float
+	for spirt in _spirts_within_suckzone:
+		var dist := spirt.global_position.distance_to(_nozzle.global_position)
+		if closest_spirit == null || dist < closest_distance:
+			closest_spirit = spirt
+			closest_distance = dist
+	
+	if _spirt_being_sucked != null && closest_spirit != _spirt_being_sucked:
+		_spirt_being_sucked._is_being_sucked = false
+		
+	_spirt_being_sucked = closest_spirit
+	
+	if _spirt_being_sucked == null:
+		return
+		
+	if !_spirt_being_sucked._is_being_sucked:
+		_spirt_being_sucked._sucked_origin_position = _spirt_being_sucked.global_position
+		_spirt_being_sucked._is_being_sucked = true
+	
+	_spirt_being_sucked._sucked_time += delta
+	var sucked_frac := _spirt_being_sucked._sucked_time / _suck_up_time
+	_spirt_being_sucked.global_position = _spirt_being_sucked._sucked_origin_position.lerp(_nozzle.global_position, _suck_curve.sample(sucked_frac))
+	
+	if _spirt_being_sucked._sucked_time >= _suck_up_time:
+		_spirt_being_sucked.queue_free()
+		_spirt_being_sucked = null
 
 func _do_surface_normalization() -> void:
 	var height_offset := 0.5

@@ -1,10 +1,14 @@
-class_name Spirit extends Node3D
+class_name Spirit extends StaticBody3D
 
 @export var base_speed : float = 0.25
 
 var _current_path : Path3D
 var _path_length : float
 var _path_alpha : float
+
+var _is_being_sucked : bool
+var _sucked_origin_position : Vector3
+var _sucked_time : float
 
 func set_path(new_path : Path3D) -> void:
 	_current_path = new_path
@@ -16,6 +20,10 @@ func _process(delta: float) -> void:
 	if _current_path == null:
 		queue_free()
 		return
+	
+	if _is_being_sucked:
+		return
+	_sucked_time = 0.0
 	
 	var path_position = _current_path.curve.samplef(_path_alpha * _current_path.curve.point_count)
 	global_position = _current_path.to_global(path_position)
