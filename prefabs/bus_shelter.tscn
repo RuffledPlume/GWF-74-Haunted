@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpiy7nvcm57as"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wx7ik"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.352941)
+
+[node name="BusShelter" type="Node3D"]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.5)
+size = Vector3(5, 3, 2)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 2.5, -0.5)
+radius = 1.0
+height = 4.6
+sides = 36
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45, -0.45)
+operation = 2
+size = Vector3(4.5, 2.9, 3.1)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45, -1.3)
+size = Vector3(0.25, 2.9, 0.25)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -5.96046e-08, 0.95, -1.3)
+size = Vector3(0.25, 4.5, 0.25)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0999999, 1.45, -1.3)
+material_override = SubResource("StandardMaterial3D_wx7ik")
+size = Vector3(4.8, 2.9, 0.1)

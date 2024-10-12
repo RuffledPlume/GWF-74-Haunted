@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://did1217yc1l6s"]
+
+[ext_resource type="Shader" uid="uid://bprs3cy65fiug" path="res://shaders/soul_orb.tres" id="1_0o1vc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_raykt"]
+render_priority = 0
+shader = ExtResource("1_0o1vc")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+material_override = SubResource("ShaderMaterial_raykt")
+radius = 3.0
+radial_segments = 60
+rings = 30

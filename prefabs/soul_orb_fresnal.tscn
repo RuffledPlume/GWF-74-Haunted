@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cr6qj40i15igb"]
+
+[ext_resource type="Shader" uid="uid://b7iaduc8b2tm5" path="res://shaders/soul_orb_fresnal.tres" id="1_4ww64"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5imet"]
+render_priority = 0
+shader = ExtResource("1_4ww64")
+
+[node name="SoulOrbFresnal" type="Node3D"]
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+material_override = SubResource("ShaderMaterial_5imet")
+radius = 5.0
+radial_segments = 60
+rings = 30
