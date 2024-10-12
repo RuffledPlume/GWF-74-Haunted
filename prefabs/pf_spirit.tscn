@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7kymne6t62tr"]
+
+[ext_resource type="Script" path="res://scripts/spirit.gd" id="1_nywoq"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_c26ci"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u6aio"]
+transparency = 1
+albedo_color = Color(1, 1, 0.286275, 0.431373)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3qa7e"]
+
+[node name="Spirit" type="StaticBody3D"]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_nywoq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_c26ci")
+surface_material_override/0 = SubResource("StandardMaterial3D_u6aio")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_3qa7e")
