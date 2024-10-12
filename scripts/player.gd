@@ -1,6 +1,6 @@
 class_name Player extends CharacterBody3D
 
-@export var _camera : Camera3D
+@export_category("Movement Values")
 @export var _base_speed : float = 20.0
 @export var _run_mod : float = 1.75
 @export var _jump_force : float = 7.0
@@ -9,16 +9,45 @@ class_name Player extends CharacterBody3D
 @export var _min_step_height := 0.15
 @export var _max_step_height := 0.3
 
+@export_category("Hoover Values")
+@export var _sucking_force : float = 100.0
+@export var _nozzle : Node3D
+
+@export_category("Internal")
+@export var _camera : Camera3D
+@export var _suck_zone : Area3D
+
 var _mouse_relative : Vector2
 var _gravity : Vector3
 var _gravity_strength : float
 var _surface_point : Vector3
 var _surface_normal : Vector3
+var _spirts_within_suckzone : Array[Spirit]
+var _rigidbodies_within_suckzone : Array[RigidBody3D]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_gravity = ProjectSettings.get_setting("physics/3d/default_gravity_vector")
 	_gravity *= ProjectSettings.get_setting("physics/3d/default_gravity")
+	
+	_suck_zone.body_entered.connect(_body_enter_suck_zone)
+	_suck_zone.body_exited.connect(_body_exit_suck_zone)
+	
+func _body_enter_suck_zone(body: Node3D) -> void:
+	if body is Spirit:
+		_spirts_within_suckzone.push_back(body)
+	elif body is RigidBody3D:
+		_rigidbodies_within_suckzone.push_back(body)
+	
+func _body_exit_suck_zone(body: Node3D) -> void:
+	if body is Spirit:
+		var idx := _spirts_within_suckzone.find(body)
+		if idx != -1:
+			_spirts_within_suckzone.remove_at(idx)
+	elif body is RigidBody3D:
+		var idx := _rigidbodies_within_suckzone.find(body)
+		if idx != -1:
+			_rigidbodies_within_suckzone.remove_at(idx)
 	
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -31,6 +60,9 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		_do_surface_normalization()
 	_do_locomotion(delta)
+	
+	if Input.is_action_pressed("Suck"):
+		_do_sucking()
 	
 func _get_input() -> Vector2:
 	var input : Vector2
@@ -52,7 +84,11 @@ func debug_draw_raycast(params: PhysicsRayQueryParameters3D, result: Dictionary)
 		DebugDraw3D.draw_line(params.from, params.to, Color.RED)
 	else:
 		DebugDraw3D.draw_line(params.from, result.position, Color.GREEN)
-	
+
+func _do_sucking() -> void:
+	for rigid in _rigidbodies_within_suckzone:
+		rigid.apply_force((_nozzle.global_position - rigid.global_position).normalized() * _sucking_force)
+
 func _do_surface_normalization() -> void:
 	var height_offset := 0.5
 	

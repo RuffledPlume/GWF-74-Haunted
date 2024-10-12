@@ -1,6 +1,6 @@
 class_name Spirit extends Node3D
 
-@export var base_speed : float = 0.5
+@export var base_speed : float = 0.25
 
 var _current_path : Path3D
 var _path_length : float
