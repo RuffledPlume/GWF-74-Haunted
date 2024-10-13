@@ -17,7 +17,7 @@ radius = 1.71425
 collision_layer = 2
 script = ExtResource("1_fyd1d")
 _sucking_force = 25.0
-_nozzle = NodePath("Camera3D/Hoover/Node3D")
+_nozzle = NodePath("SubViewportContainer/SubViewport/SecondaryCamera/Hoover/Node3D")
 _suck_up_time = 1.5
 _suck_curve = SubResource("Curve_7t3sb")
 _camera = NodePath("Camera3D")
@@ -29,12 +29,10 @@ shape = SubResource("CapsuleShape3D_bqfdg")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+cull_mask = 1048573
 
-[node name="Hoover" parent="Camera3D" instance=ExtResource("2_on8xf")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.549, -0.465, -0.624)
-
-[node name="Node3D" type="Node3D" parent="Camera3D/Hoover"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.741383, 0, 0)
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Camera3D"]
+remote_path = NodePath("../../SubViewportContainer/SubViewport/SecondaryCamera")
 
 [node name="Area3D" type="Area3D" parent="Camera3D"]
 collision_layer = 4
@@ -43,3 +41,27 @@ collision_mask = 4
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Camera3D/Area3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -3.34218)
 shape = SubResource("CylinderShape3D_f4o21")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="SecondaryCamera" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+cull_mask = 2
+
+[node name="Hoover" parent="SubViewportContainer/SubViewport/SecondaryCamera" instance=ExtResource("2_on8xf")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.549, -0.465, -0.624)
+
+[node name="Node3D" type="Node3D" parent="SubViewportContainer/SubViewport/SecondaryCamera/Hoover"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.741383, 0, 0)

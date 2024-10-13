@@ -32,7 +32,6 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-605.734, 7.65886)
 modes/depth_draw = 2
 flags/unshaded = true
 nodes/fragment/0/position = Vector2(320, 100)
