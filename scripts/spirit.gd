@@ -1,6 +1,6 @@
 class_name Spirit extends StaticBody3D
 
-@export var base_speed : float = 0.25
+@export var base_speed : float = 0.025
 
 var _current_path : Path3D
 var _path_length : float
