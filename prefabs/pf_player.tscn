@@ -10,8 +10,8 @@ point_count = 3
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bqfdg"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_f4o21"]
-height = 4.57858
-radius = 1.71425
+height = 8.0
+radius = 2.0
 
 [node name="PF_Player" type="CharacterBody3D" node_paths=PackedStringArray("_nozzle", "_camera", "_suck_zone")]
 collision_layer = 2
@@ -30,6 +30,7 @@ shape = SubResource("CapsuleShape3D_bqfdg")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
 cull_mask = 1048573
+fov = 90.0
 
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="Camera3D"]
 remote_path = NodePath("../../SubViewportContainer/SubViewport/SecondaryCamera")
@@ -39,7 +40,7 @@ collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Camera3D/Area3D"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -3.34218)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 5.68248e-08, -4.64218)
 shape = SubResource("CylinderShape3D_f4o21")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]

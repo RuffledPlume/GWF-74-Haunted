@@ -193,6 +193,7 @@ func _do_locomotion(delta: float) -> void:
 	new_velocity += _gravity * delta
 	
 	if is_grounded:
+		var has_jumped := false
 		var speed := _base_speed
 		if is_running:
 			speed *= _run_mod
@@ -211,7 +212,12 @@ func _do_locomotion(delta: float) -> void:
 	else:
 		new_velocity += input_3d * (_base_speed * delta * 0.2) # Allow a little bit of agency whilst jumping
 		new_velocity -= velocity * (delta * _air_drag)
-	
+		
+		if Input.is_action_just_pressed("Movement_Jump") && !is_on_floor():
+			new_velocity += Vector3.UP * _jump_force * 1.5
+			new_velocity.x *= 2.0
+			new_velocity.z *= 2.0
+			
 	velocity = new_velocity 
 	move_and_slide()
 	
